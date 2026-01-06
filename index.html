@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+insidenside!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -124,10 +124,9 @@ document.getElementById("spd").innerText = Math.abs(speed*800).toFixed(0);
 const camOffset = new THREE.Vector3(6, 4, 10);
 const desiredCamPos = bus.position.clone().add(camOffset);
 camera.position.lerp(desiredCamPos, 0.05);
-camera.lookAt(bus.position);    
- 
-let inside = false;
-document.body.ondblclick = () => {
+camera.lookAt(bus.position); sidside
+ sidedelet inside = false;
+document.body.ondblclick =() => {
   inside = !inside;
   if (inside) {
     camera.position.set(0, 2, 1);   // interior view
