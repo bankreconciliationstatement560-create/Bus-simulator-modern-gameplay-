@@ -107,6 +107,10 @@ bus.rotation.y += steer;
  bus.rotation.y = Math.max(-0.6, Math.min(0.6, bus.rotation.y));
     speed += (targetSpeed - speed) * 0.08;
 bus.position.z -= speed;
+cars.forEach(c=>{
+  c.position.z += speed*0.8;
+  if(c.position.z>10) c.position.z=-100;
+});
 document.getElementById("spd").innerText = Math.abs(speed*800).toFixed(0);
 // Camera follow (smooth)
 const camOffset = new THREE.Vector3(6, 4, 10);
