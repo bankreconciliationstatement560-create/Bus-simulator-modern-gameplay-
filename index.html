@@ -109,7 +109,14 @@ bus.rotation.y += steer;
 bus.position.z -= speed;
 cars.forEach(c=>{
   c.position.z += speed*0.8;
-  if(c.position.z>10) c.position.z=-100;
+  if(c.position.z>10) c.position.z=-100;// collision check
+  let dz = Math.abs(c.position.z - bus.position.z);
+  let dx = Math.abs(c.position.x - bus.position.x);
+
+  if(dz < 2 && dx < 1.5){
+    coins -= 500;
+    c.position.z = -100; // reset car
+document.getElementById("coins").innerText = coins; 
 });
 document.getElementById("spd").innerText = Math.abs(speed*800).toFixed(0);
 // Camera follow (smooth)
