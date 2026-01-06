@@ -43,6 +43,18 @@ const groundMat=new THREE.MeshBasicMaterial({color:0x2fbf5b});
 const ground=new THREE.Mesh(groundGeo,groundMat);
 ground.rotation.x=-Math.PI/2;
 scene.add(ground);
+ground.material.color.set(0x222222);
+
+const laneGeo = new THREE.PlaneGeometry(5000, 0.15);
+const laneMat = new THREE.MeshBasicMaterial({color:0xffffff});
+
+for(let i=-2;i<=2;i++){
+  const lane=new THREE.Mesh(laneGeo,laneMat);
+  lane.rotation.x=-Math.PI/2;
+  lane.position.z=i*4;
+  scene.add(lane);
+}
+ 
 const bus=new THREE.Group();
 
 const body=new THREE.Mesh(
