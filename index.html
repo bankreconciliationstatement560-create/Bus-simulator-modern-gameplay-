@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Bus Simulator</title>
+<style>
+html,body{margin:0;overflow:hidden;background:#87ceeb;font-family:system-ui}
+</style>
+</head>
+<body>
+<div id="hud" style="
+position:fixed;top:10px;left:10px;z-index:10;
+background:rgba(0,0,0,.5);color:#fff;
+padding:10px 12px;border-radius:12px;
+font-weight:700;line-height:1.4;">
+Speed: <span id="spd">0</span><br>
+Coins: <span id="coins">0</span><br>
+Steer: <span id="steerMode">TILT</span>
+</div>
+ <div id="controls" style="
+position:fixed;bottom:12px;left:10px;right:10px;
+display:flex;gap:10px;z-index:10;">
+<div id="leftBtn"  style="flex:1;background:#333;color:#fff;border-radius:14px;text-align:center;line-height:60px;">⬅️</div>
+<div id="accelBtn" style="flex:1;background:#16a34a;color:#fff;border-radius:14px;text-align:center;line-height:60px;">ACCEL</div>
+<div id="brakeBtn" style="flex:1;background:#dc2626;color:#fff;border-radius:14px;text-align:center;line-height:60px;">BRAKE</div>
+<div id="rightBtn" style="flex:1;background:#333;color:#fff;border-radius:14px;text-align:center;line-height:60px;">➡️</div>
+ </div> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x87ceeb);
+const camera=new THREE.PerspectiveCamera(70,innerWidth/innerHeight,.1,2000);
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth,innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+document.body.appendChild(renderer.domElement);
+const light=new THREE.AmbientLight(0xffffff,0.9);
+scene.add(light);
+
+const groundGeo=new THREE.PlaneGeometry(5000,500);
+const groundMat=new THREE.MeshBasicMaterial({color:0x2fbf5b});
+const ground=new THREE.Mesh(groundGeo,groundMat);
+ground.rotation.x=-Math.PI/2;
+scene.add(ground);
+const bus=new THREE.Group();
+
+const body=new THREE.Mesh(
+  new THREE.BoxGeometry(2.5,1.2,6),
+  new THREE.MeshBasicMaterial({color:0xff4444})
+);
+body.position.y=1;
+bus.add(body);
+
+const cabin=new THREE.Mesh(
+  new THREE.BoxGeometry(2.2,1,2),
+  new THREE.MeshBasicMaterial({color:0xdddddd})
+);
+cabin.position.set(0,1.5,-1.5);
+bus.add(cabin);
+
+scene.add(bus);
+camera.position.set(6,4,10);
+camera.lookAt(bus.position);
+let speed=0;
+let targetSpeed = 0;
+
+accelBtn.onpointerdown = ()=> targetSpeed = 0.12;
+brakeBtn.onpointerdown = ()=> targetSpeed = -0.08;
+accelBtn.onpointerup = brakeBtn.onpointerup = ()=> targetSpeed = 0;
+function animate(){
+  requestAnimationFrame(animate);
+  bus.rotation.y+=0.002;
+    speed += (targetSpeed - speed) * 0.08;
+bus.position.z -= speed;
+document.getElementById("spd").innerText = Math.abs(speed*800).toFixed(0);
+    
+  renderer.render(scene,camera);
+}
+animate();
+
+  
+  
+   </script>
+
+  
+</body>
